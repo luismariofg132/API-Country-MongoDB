@@ -9,6 +9,8 @@ services:
       - "4000:8080"
     links:
       - mongo
+    # volumes:
+    #   - .:/app
 
   mongo:
     container_name: mongo-db
