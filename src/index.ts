@@ -8,6 +8,7 @@ import { decodeToken } from "./Firebase/AdminToken";
 import path from "path";
 import swaggerUi from "swagger-ui-express";
 import swaggerJsdoc from "swagger-jsdoc";
+import { authRouter } from "./Routes/auth.router";
 
 const app = express();
 dotenv.config();
@@ -39,6 +40,7 @@ connectDatabase()
     .then(() => {
         app.use(morgan("dev"));
         app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerJsdoc(swaggerSpec)))
+        app.use("/auth", authRouter)
         app.use("/countries", decodeToken, countrieRouter)
         app.listen(app.get("port"), () => {
             console.log(`Server running on port ${app.get("port")}`);
