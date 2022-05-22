@@ -9,6 +9,9 @@ import path from "path";
 import swaggerUi from "swagger-ui-express";
 import swaggerJsdoc from "swagger-jsdoc";
 
+const app = express();
+dotenv.config();
+
 const swaggerSpec = {
     definition: {
         openapi: '3.0.0',
@@ -23,15 +26,12 @@ const swaggerSpec = {
         },
         servers: [
             {
-                url: 'http://localhost:8080/',
+                url: process.env.SERVER_SWAGGER,
             }
         ]
     },
     apis: [`${path.join(__dirname, './Routes/*.js')}`]
 }
-
-const app = express();
-dotenv.config();
 
 app.set("port", process.env.PORT || 3000);
 

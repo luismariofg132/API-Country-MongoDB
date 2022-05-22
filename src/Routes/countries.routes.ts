@@ -2,6 +2,10 @@ import express, { Request, Response } from "express";
 import { ObjectId } from "mongodb";
 import { collection } from "../services/database.service";
 
+// Validate Joi
+import validator from "../Utilities/validator";
+import countrySchema from "../Schemas-Joi/country.schemajoi";
+
 export const countrieRouter = express.Router();
 
 countrieRouter.use(express.json());
@@ -31,7 +35,7 @@ countrieRouter.get("/:id", async (req: Request, res: Response) => {
     }
 })
 
-countrieRouter.post("/", async (req: Request, res: Response) => {
+countrieRouter.post("/", validator.body(countrySchema), async (req: Request, res: Response) => {
     try {
         const newCountrie = req.body;
         const result = await collection.countries.insertOne(newCountrie);
@@ -68,11 +72,11 @@ countrieRouter.delete("/:id", async (req: Request, res: Response) => {
         const query = { _id: new ObjectId(id) };
         const result = await collection.countries.deleteOne(query);
         if (result && result.deletedCount) {
-            res.status(202).send("Languaje deleted");
+            res.status(202).send({ message: "Country deleted" });
         } else if (!result) {
-            res.json({ message: `Failed to delete languaje with id ${id}` }).status(400);
+            res.json({ message: `Failed to delete country with id ${id}` }).status(400);
         } else if (!result.deletedCount) {
-            res.json({ message: `Languaje with id ${id} not found` }).status(404);
+            res.json({ message: `country with id ${id} not found` }).status(404);
         }
     } catch (error) {
         console.log(error);
