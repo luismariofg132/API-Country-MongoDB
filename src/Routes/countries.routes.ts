@@ -80,39 +80,3 @@ countrieRouter.delete("/:id", async (req: Request, res: Response) => {
     }
 })
 
-/**
- * @swagger
- * components:
- *  schemas:
- *      country:
- *          type: object
- *          properties:
- *              country_name:
- *                  type: string
- *                  description: name of the country
- *              country_short_name:
- *                  type: string
- *                  description: short name of the country
- *              country_phone_code:
- *                  type: number
- *                  description: phone code of the country
- *          required:
- *              - country_name
- *              - country_short_name
- *              - country_phone_code
- *          example:
- *              country_name: "Argentina"
- *              country_short_name: "AR"
- *              country_phone_code: 54
- * 
- * @swagger
- * /countries:
- *  get:
- *    summary: Get all countries
- *    tags: [Countries]
- *    responses:
- *      200:
- *          description: A list of countries
- * 
- *    
- */

@@ -13,8 +13,13 @@ const swaggerSpec = {
     definition: {
         openapi: '3.0.0',
         info: {
-            title: 'Backend Reto Final Etapa 1',
-            version: '1.0.0'
+            title: 'Countries API',
+            version: '1.0.0',
+            description: 'Countries API with authentication',
+            contact: {
+                name: 'Luis Mario Franco',
+                email: 'lmfg06@gmail.com'
+            }
         },
         servers: [
             {
@@ -34,7 +39,7 @@ connectDatabase()
     .then(() => {
         app.use(morgan("dev"));
         app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerJsdoc(swaggerSpec)))
-        app.use("/countries", countrieRouter)
+        app.use("/countries", decodeToken, countrieRouter)
         app.listen(app.get("port"), () => {
             console.log(`Server running on port ${app.get("port")}`);
         })
